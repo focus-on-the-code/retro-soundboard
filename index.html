@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Soundboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #2e2e2e 0%, #1b1b1b 100%);
+      font-family: 'Courier New', Courier, monospace;
+      color: #fff;
+    }
+
+    .soundboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 700px;
+      text-align: center;
+      padding: 40px;
+      background-color: #333;
+      border: 8px solid #111;
+      border-radius: 16px;
+      box-shadow:
+        0 0 25px rgba(255, 0, 0, 0.5),
+        inset 0 0 20px #000;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sound-button {
+      padding: 20px 40px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(to bottom, #c00, #800);
+      border: 4px solid #000;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow:
+        0 8px 0 #400,
+        0 12px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
+      width: 160px;
+    }
+
+    .sound-button:active {
+      box-shadow:
+        0 4px 0 #400,
+        0 6px 10px rgba(0, 0, 0, 0.6);
+      transform: translateY(4px);
+    }
+
+    .sound-button:hover {
+      background: linear-gradient(to bottom, #f00, #900);
+    }
+
+    .upload-button {
+      padding: 7px 12px;
+      font-size: 0.85rem;
+      background: linear-gradient(to bottom, #888, #444);
+      color: #fff;
+      font-weight: bold;
+      border: 3px solid #111;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow:
+        0 4px 0 #111,
+        0 6px 10px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+      margin-bottom: 10px;
+      width: 70%;
+    }
+
+    .upload-button:active {
+      box-shadow:
+        0 2px 0 #111,
+        0 3px 5px rgba(0, 0, 0, 0.5);
+      transform: translateY(2px);
+    }
+
+    .upload-button:hover {
+      background: linear-gradient(to bottom, #bbb, #666);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="soundboard">
+    <!-- Create 9 button groups -->
+    <div class="button-group">
+      <label class="upload-button" for="file-1">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-1">
+      <button class="sound-button" id="play-sound-1">Play Sound 1</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-2">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-2">
+      <button class="sound-button" id="play-sound-2">Play Sound 2</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-3">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-3">
+      <button class="sound-button" id="play-sound-3">Play Sound 3</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-4">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-4">
+      <button class="sound-button" id="play-sound-4">Play Sound 4</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-5">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-5">
+      <button class="sound-button" id="play-sound-5">Play Sound 5</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-6">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-6">
+      <button class="sound-button" id="play-sound-6">Play Sound 6</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-7">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-7">
+      <button class="sound-button" id="play-sound-7">Play Sound 7</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-8">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-8">
+      <button class="sound-button" id="play-sound-8">Play Sound 8</button>
+    </div>
+    <div class="button-group">
+      <label class="upload-button" for="file-9">Upload Sound</label>
+      <input type="file" accept="audio/mp3" id="file-9">
+      <button class="sound-button" id="play-sound-9">Play Sound 9</button>
+    </div>
+  </div>
+
+  <script>
+    const sounds = {};
+
+    for (let i = 1; i <= 9; i++) {
+      const fileInput = document.getElementById(`file-${i}`);
+      const playButton = document.getElementById(`play-sound-${i}`);
+
+      fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file && file.type === 'audio/mpeg') {
+          const fileURL = URL.createObjectURL(file);
+          sounds[i] = new Audio(fileURL);
+          alert(`Sound ${i} uploaded successfully!`);
+        } else {
+          alert('Please upload a valid MP3 file.');
+        }
+      });
+
+      playButton.addEventListener('click', () => {
+        const sound = sounds[i];
+        if (sound) {
+          sound.onloadedmetadata = () => {
+            if (sound.duration >= 1 && sound.duration <= 60) {
+              sound.play();
+            } else {
+              alert('Audio file must be between 1 and 60 seconds long.');
+            }
+          };
+          sound.load();
+        } else {
+          alert(`Please upload a sound for button ${i} first.`);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
